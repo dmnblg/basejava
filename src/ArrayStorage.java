@@ -7,11 +7,7 @@ public class ArrayStorage {
     Resume[] storage = new Resume[10000];
 
     void clear() {
-        System.out.println("try to clear");
-        for (int i = 0; i < storage.length; i++) {
-            storage[i] = null;
-        }
-
+        Arrays.fill(storage, null);
     }
 
     void save(Resume r) {
