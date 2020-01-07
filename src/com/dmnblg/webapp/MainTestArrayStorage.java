@@ -1,5 +1,10 @@
+package com.dmnblg.webapp;
+
+import com.dmnblg.webapp.model.Resume;
+import com.dmnblg.webapp.storage.ArrayStorage;
+
 /**
- * Test for your ArrayStorage implementation
+ * Test for your com.dmnblg.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
@@ -23,7 +28,17 @@ public class MainTestArrayStorage {
 
         printAll();
         ARRAY_STORAGE.delete(r1.uuid);
+        ARRAY_STORAGE.delete("dummy");
+        ARRAY_STORAGE.update(r3, "uuid33");
         printAll();
+
+        Resume r4 = new Resume();
+        r4.uuid = "uuid4";
+        Resume r5 = new Resume();
+        r5.uuid = "uuid5";
+        ARRAY_STORAGE.save(r4);
+        ARRAY_STORAGE.save(r5);
+
         ARRAY_STORAGE.clear();
         printAll();
 
