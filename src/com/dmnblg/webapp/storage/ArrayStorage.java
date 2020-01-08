@@ -8,55 +8,49 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private static final int MAX_RESUME = 10000;
-    Resume[] storage = new Resume[MAX_RESUME];
-    int size = 0;
+    private static final int MAX_RESUME = 10_000;
+    private Resume[] storage = new Resume[MAX_RESUME];
+    private int size = 0;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public void save(Resume r) {
-        if (size == MAX_RESUME){
+    public void save(Resume resume) {
+        if (size == MAX_RESUME) {
             System.out.println("В хранилище уже содержится макимальное количество резюме");
             return;
         }
 
-        int i = getIndexByUuid(r.uuid);
-        if (i == -1) {
-            storage[size++] = r;
+        int index = getIndex(resume.getUuid());
+        if (index == -1) {
+            storage[size++] = resume;
         } else {
-            System.out.println("В хранилище уже существует резюме с UID ".concat(r.uuid));
+            System.out.println("В хранилище уже существует резюме с UID " + resume.getUuid());
         }
     }
 
-    public void update(Resume r, String newUuid) {
-        int i = getIndexByUuid(r.uuid);
-        if (i > -1) {
-            storage[i].uuid = newUuid; // Пока других полей нет, будем менять uuid
-        } else {
-            resumeNotFound(r.uuid);
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (index > -1) {
+            storage[index] = resume;
         }
     }
 
     public Resume get(String uuid) {
-        int i = getIndexByUuid(uuid);
-        if (i > -1) {
-            return storage[i];
-        } else {
-            resumeNotFound(uuid);
+        int index = getIndex(uuid);
+        if (index > -1) {
+            return storage[index];
         }
         return null;
     }
 
     public void delete(String uuid) {
-        int del = getIndexByUuid(uuid);
-        if (del > -1) {
-            storage[del] = storage[size - 1];
+        int index = getIndex(uuid);
+        if (index > -1) {
+            storage[index] = storage[size - 1];
             storage[size-- - 1] = null;
-        } else {
-            resumeNotFound(uuid);
         }
     }
 
@@ -71,16 +65,13 @@ public class ArrayStorage {
         return size;
     }
 
-    int getIndexByUuid(String uuid) {
+    private int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
+        System.out.println("В хранилище отсутствут резюме с UID " + uuid);
         return -1;
-    }
-
-    private void resumeNotFound(String uuid) {
-        System.out.println("В хранилище отсутствут резюме с UID ".concat(uuid));
     }
 }
