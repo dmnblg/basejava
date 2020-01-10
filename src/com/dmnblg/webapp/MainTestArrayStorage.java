@@ -1,13 +1,14 @@
 package com.dmnblg.webapp;
 
 import com.dmnblg.webapp.model.Resume;
+import com.dmnblg.webapp.storage.AbstractArrayStorage;
 import com.dmnblg.webapp.storage.ArrayStorage;
 
 /**
  * Test for your com.dmnblg.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    static final AbstractArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
