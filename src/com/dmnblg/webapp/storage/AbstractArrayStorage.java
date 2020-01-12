@@ -19,6 +19,7 @@ public abstract class AbstractArrayStorage {
         if (index > -1) {
             return storage[index];
         }
+        System.out.println("В хранилище отсутствут резюме с UID " + uuid);
         return null;
     }
 
@@ -46,25 +47,15 @@ public abstract class AbstractArrayStorage {
     protected abstract int getIndex(String uuid);
 
     public void save(Resume resume) {
-
         if (size == MAX_RESUME) {
             System.out.println("В хранилище уже содержится макимальное количество резюме");
             return;
         }
 
         int index = getIndex(resume.getUuid());
-        if (index == -1) {
-            storage[size++] = resume;
-        } else if (index < -1) {
-            int pos = -index - 1; // Можно обойтись и без временной переменной, но так код понятней
-            Resume[] temp = Arrays.copyOfRange(storage, pos, size);
-            for (int i = 0; i < temp.length; i++) {
-                storage[i + pos + 1] = temp[i];
-            }
-            storage[pos] = resume;
-            size++;
+        if (index <= -1) {
+            saveItem(index, resume);
         } else {
-            //index >= 0
             System.out.println("В хранилище уже существует резюме с UID " + resume.getUuid());
         }
     }
@@ -80,5 +71,7 @@ public abstract class AbstractArrayStorage {
     }
 
     abstract protected void deleteItem(int index);
+
+    abstract protected void saveItem(int index, Resume resume);
 
 }
