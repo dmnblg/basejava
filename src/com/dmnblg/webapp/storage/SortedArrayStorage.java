@@ -15,14 +15,13 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void deleteItem(int index) {
-        System.arraycopy(storage, index+1, storage, index, size - 1);
+        System.arraycopy(storage, index + 1, storage, index, size - 1);
     }
 
     @Override
     protected void saveItem(int index, Resume resume) {
         int pos = -index - 1; // Можно обойтись и без временной переменной, но так код понятней
-        System.arraycopy(storage, pos + 1, storage, pos, size);
+        System.arraycopy(storage, pos, storage, pos + 1, size - pos);
         storage[pos] = resume;
-        size++;
     }
 }
