@@ -1,5 +1,7 @@
 package com.dmnblg.webapp.storage;
 
+import com.dmnblg.webapp.exception.ExistStorageException;
+import com.dmnblg.webapp.exception.NotExistStorageException;
 import com.dmnblg.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -19,8 +21,7 @@ public abstract class AbstractArrayStorage {
         if (index > -1) {
             return storage[index];
         }
-        System.out.println("В хранилище отсутствут резюме с UID " + uuid);
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     /**
@@ -40,7 +41,7 @@ public abstract class AbstractArrayStorage {
         if (index >= 0) {
             storage[index] = resume;
         } else {
-            System.out.println("В хранилище отсутствут резюме с UID " + resume.getUuid());
+            throw new NotExistStorageException(resume.getUuid());
         }
     }
 
@@ -57,7 +58,7 @@ public abstract class AbstractArrayStorage {
             saveItem(index, resume);
             size++;
         } else {
-            System.out.println("В хранилище уже существует резюме с UID " + resume.getUuid());
+            throw new ExistStorageException(resume.getUuid());
         }
     }
 
@@ -67,7 +68,7 @@ public abstract class AbstractArrayStorage {
             deleteItem(index);
             storage[size-- - 1] = null;
         } else {
-            System.out.println("В хранилище отсутствут резюме с UID " + uuid);
+            throw new NotExistStorageException(uuid);
         }
     }
 
