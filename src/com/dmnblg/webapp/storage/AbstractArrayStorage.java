@@ -5,8 +5,7 @@ import com.dmnblg.webapp.model.Resume;
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage {
-    //protected static final int MAX_RESUME = 10_000;
-    protected static final int MAX_RESUME = 3;
+    protected static final int MAX_RESUME = 10_000;
     protected Resume[] storage = new Resume[MAX_RESUME];
     protected int size = 0;
 
