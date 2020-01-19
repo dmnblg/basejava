@@ -2,6 +2,7 @@ package com.dmnblg.webapp.storage;
 
 import com.dmnblg.webapp.exception.ExistStorageException;
 import com.dmnblg.webapp.exception.NotExistStorageException;
+import com.dmnblg.webapp.exception.OverflowStorageException;
 import com.dmnblg.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -49,8 +50,7 @@ public abstract class AbstractArrayStorage {
 
     public void save(Resume resume) {
         if (size == MAX_RESUME) {
-            System.out.println("В хранилище уже содержится макимальное количество резюме");
-            return;
+            throw new OverflowStorageException(resume.getUuid());
         }
 
         int index = getIndex(resume.getUuid());
