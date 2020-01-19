@@ -8,9 +8,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.UUID;
+
 public abstract class AbstractArrayStorageTest {
 
-    public AbstractArrayStorage storage;
+    private AbstractArrayStorage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
@@ -29,7 +31,6 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void clear() {
-        Assert.assertEquals(3, storage.size);
         storage.clear();
         Assert.assertEquals(0, storage.size);
     }
@@ -37,16 +38,16 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void get() {
         Resume resume = storage.get(UUID_2);
-        Assert.assertEquals(UUID_2, resume.getUuid());
+        Assert.assertEquals(storage.get(UUID_2), resume);
     }
 
     @Test
     public void getAll() {
         Resume[] all = storage.getAll();
         Assert.assertEquals(3, all.length);
-        Assert.assertEquals(UUID_1, all[0].getUuid());
-        Assert.assertEquals(UUID_2, all[1].getUuid());
-        Assert.assertEquals(UUID_3, all[2].getUuid());
+        Assert.assertEquals(storage.get(UUID_1), all[0]);
+        Assert.assertEquals(storage.get(UUID_2), all[1]);
+        Assert.assertEquals(storage.get(UUID_3), all[2]);
     }
 
     @Test
@@ -56,10 +57,11 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void save() {
-        String uuid = java.util.UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString();
         Resume resume = new Resume(uuid);
         storage.save(resume);
         Assert.assertEquals(resume, storage.get(uuid));
+        Assert.assertEquals(4, storage.size);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -85,7 +87,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = OverflowStorageException.class)
-    public void capacityTest() throws Exception {
+    public void overflowTest() throws Exception {
 
         // MAX_RESUME изменить не получилось, т.к. final
         // пока будем заполнять весь массив
