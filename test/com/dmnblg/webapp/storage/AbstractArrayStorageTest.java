@@ -4,7 +4,9 @@ import com.dmnblg.webapp.exception.ExistStorageException;
 import com.dmnblg.webapp.exception.NotExistStorageException;
 import com.dmnblg.webapp.exception.OverflowStorageException;
 import com.dmnblg.webapp.model.Resume;
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,27 +34,27 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void clear() {
         storage.clear();
-        Assert.assertEquals(0, storage.size);
+        assertEquals(0, storage.size);
     }
 
     @Test
     public void get() {
         Resume resume = storage.get(UUID_2);
-        Assert.assertEquals(storage.get(UUID_2), resume);
+        assertEquals(storage.get(UUID_2), resume);
     }
 
     @Test
     public void getAll() {
         Resume[] all = storage.getAll();
-        Assert.assertEquals(3, all.length);
-        Assert.assertEquals(storage.get(UUID_1), all[0]);
-        Assert.assertEquals(storage.get(UUID_2), all[1]);
-        Assert.assertEquals(storage.get(UUID_3), all[2]);
+        assertEquals(3, all.length);
+        assertEquals(storage.get(UUID_1), all[0]);
+        assertEquals(storage.get(UUID_2), all[1]);
+        assertEquals(storage.get(UUID_3), all[2]);
     }
 
     @Test
     public void size() {
-        Assert.assertEquals(3, storage.size);
+        assertEquals(3, storage.size);
     }
 
     @Test
@@ -60,14 +62,14 @@ public abstract class AbstractArrayStorageTest {
         String uuid = UUID.randomUUID().toString();
         Resume resume = new Resume(uuid);
         storage.save(resume);
-        Assert.assertEquals(resume, storage.get(uuid));
-        Assert.assertEquals(4, storage.size);
+        assertEquals(resume, storage.get(uuid));
+        assertEquals(4, storage.size);
     }
 
     @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(UUID_2);
-        Assert.assertEquals(2, storage.size);
+        assertEquals(2, storage.size);
         storage.get(UUID_2);
     }
 
@@ -102,7 +104,7 @@ public abstract class AbstractArrayStorageTest {
                 storage.save(new Resume());
             }
             catch (OverflowStorageException e){
-                Assert.fail();
+                fail();
             }
         }
         storage.save(new Resume());
