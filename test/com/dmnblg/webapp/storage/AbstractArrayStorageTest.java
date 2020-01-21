@@ -97,9 +97,8 @@ public abstract class AbstractArrayStorageTest {
         // Field max = storageClass.getDeclaredField("MAX_RESUME");
         // max.setAccessible(true);
         // max.setInt(storage, 5);
-
         storage.clear();
-        for (int i = 0; i < 10_000; i++) {
+        for (int i = 0; i < AbstractArrayStorage.MAX_RESUME; i++) {
             try{
                 storage.save(new Resume());
             }
