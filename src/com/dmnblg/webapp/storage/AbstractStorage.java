@@ -13,6 +13,16 @@ public abstract class AbstractStorage implements Storage {
         throw new NotExistStorageException(uuid);
     }
 
+    public void update(Resume resume) {
+        // Пока будем считать, что сортировочное поле Uuid не меняется
+        int index = getIndex(resume.getUuid());
+        if (index >= 0) {
+            setItem(index, resume);
+        } else {
+            throw new NotExistStorageException(resume.getUuid());
+        }
+    }
+
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
@@ -32,4 +42,6 @@ public abstract class AbstractStorage implements Storage {
     abstract protected Resume getItem(int index);
 
     abstract protected void setNullLastItem();
+
+    abstract protected void setItem(int index, Resume resume);
 }

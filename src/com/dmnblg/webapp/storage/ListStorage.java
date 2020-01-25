@@ -16,16 +16,6 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void update(Resume resume) {
-        int index = storage.indexOf(resume);
-        if (index >= 0) {
-            storage.set(index, resume);
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
-        }
-    }
-
-    @Override
     public void save(Resume resume) {
         if (!storage.contains(resume)) {
             storage.add(resume);
@@ -68,5 +58,10 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected void setNullLastItem() {
         // Как обойтись без этого метода "костыля"?
+    }
+
+    @Override
+    protected void setItem(int index, Resume resume) {
+        storage.set(index, resume);
     }
 }

@@ -1,7 +1,6 @@
 package com.dmnblg.webapp.storage;
 
 import com.dmnblg.webapp.exception.ExistStorageException;
-import com.dmnblg.webapp.exception.NotExistStorageException;
 import com.dmnblg.webapp.exception.OverflowStorageException;
 import com.dmnblg.webapp.model.Resume;
 
@@ -33,16 +32,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public void update(Resume resume) {
-        // Пока будем считать, что сортировочное поле Uuid не меняется
-        int index = getIndex(resume.getUuid());
-        if (index >= 0) {
-            storage[index] = resume;
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
-        }
-    }
-
     public void save(Resume resume) {
         if (size == MAX_RESUME) {
             throw new OverflowStorageException(resume.getUuid());
@@ -59,5 +48,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     public void setNullLastItem() {
         storage[size-- - 1] = null;
+    }
+
+    protected void setItem(int index, Resume resume) {
+        storage[index] =  resume;
     }
 }
