@@ -7,7 +7,8 @@ import com.dmnblg.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
+
     protected static final int MAX_RESUME = 10_000;
     protected Resume[] storage = new Resume[MAX_RESUME];
     protected int size = 0;
@@ -46,8 +47,6 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    protected abstract int getIndex(String uuid);
-
     public void save(Resume resume) {
         if (size == MAX_RESUME) {
             throw new OverflowStorageException(resume.getUuid());
@@ -72,8 +71,8 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
+    protected abstract int getIndex(String uuid);
     abstract protected void deleteItem(int index);
-
     abstract protected void saveItem(int index, Resume resume);
 
 }
