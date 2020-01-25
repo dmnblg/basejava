@@ -62,4 +62,19 @@ public class ListStorage extends AbstractStorage {
     public int size() {
         return storage.size();
     }
+
+    @Override
+    protected int getIndex(String uuid) {
+        return storage.indexOf(new Resume(uuid));
+    }
+
+    @Override
+    protected void deleteItem(int index) {
+        storage.remove(index);
+    }
+
+    @Override
+    protected void saveItem(int index, Resume resume) {
+        storage.add(index, resume);
+    }
 }
