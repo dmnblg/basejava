@@ -77,4 +77,9 @@ public class ListStorage extends AbstractStorage {
     protected void saveItem(int index, Resume resume) {
         storage.add(index, resume);
     }
+
+    @Override
+    protected Resume getItem(int index) {
+        return storage.get(index);
+    }
 }

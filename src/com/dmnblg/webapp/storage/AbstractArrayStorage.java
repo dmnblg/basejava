@@ -18,12 +18,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            return storage[index];
-        }
-        throw new NotExistStorageException(uuid);
+    public Resume getItem(int index){
+        return storage[index];
     }
 
     /**
