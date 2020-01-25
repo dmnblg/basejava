@@ -1,5 +1,12 @@
 package com.dmnblg.webapp.storage;
 
-public abstract class AbstractStorage implements Storage{
+import com.dmnblg.webapp.model.Resume;
 
+public abstract class AbstractStorage implements Storage {
+
+    protected abstract int getIndex(String uuid);
+
+    abstract protected void deleteItem(int index);
+
+    abstract protected void saveItem(int index, Resume resume);
 }

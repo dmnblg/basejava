@@ -70,9 +70,4 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
             throw new NotExistStorageException(uuid);
         }
     }
-
-    protected abstract int getIndex(String uuid);
-    abstract protected void deleteItem(int index);
-    abstract protected void saveItem(int index, Resume resume);
-
 }
