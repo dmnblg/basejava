@@ -35,24 +35,6 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume get(String uuid) {
-        Resume resume = new Resume(uuid);
-        int index = storage.indexOf(resume);
-        if (index >= 0) {
-            return storage.get(index);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
-    @Override
-    public void delete(String uuid) {
-        if (!storage.remove(new Resume(uuid))){
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
-    @Override
     public Resume[] getAll() {
         Resume[] result = new Resume[storage.size()];
         return storage.toArray(result);
@@ -81,5 +63,10 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected Resume getItem(int index) {
         return storage.get(index);
+    }
+
+    @Override
+    protected void setNullLastItem() {
+        // Как обойтись без этого метода "костыля"?
     }
 }

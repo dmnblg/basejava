@@ -13,6 +13,16 @@ public abstract class AbstractStorage implements Storage {
         throw new NotExistStorageException(uuid);
     }
 
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            deleteItem(index);
+            setNullLastItem();
+        } else {
+            throw new NotExistStorageException(uuid);
+        }
+    }
+
     protected abstract int getIndex(String uuid);
 
     abstract protected void deleteItem(int index);
@@ -20,4 +30,6 @@ public abstract class AbstractStorage implements Storage {
     abstract protected void saveItem(int index, Resume resume);
 
     abstract protected Resume getItem(int index);
+
+    abstract protected void setNullLastItem();
 }

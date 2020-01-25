@@ -18,7 +18,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    public Resume getItem(int index){
+    public Resume getItem(int index) {
         return storage[index];
     }
 
@@ -57,13 +57,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         }
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            deleteItem(index);
-            storage[size-- - 1] = null;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    public void setNullLastItem() {
+        storage[size-- - 1] = null;
     }
 }
