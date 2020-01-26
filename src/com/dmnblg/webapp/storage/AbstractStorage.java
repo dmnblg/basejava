@@ -6,20 +6,21 @@ import com.dmnblg.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return getItem(index);
-        }
-        throw new NotExistStorageException(uuid);
+        int index = getExistResumeIndex(uuid);
+        return getItem(index);
     }
 
     public void update(Resume resume) {
-        // Пока будем считать, что сортировочное поле Uuid не меняется
-        int index = getIndex(resume.getUuid());
+        int index = getExistResumeIndex(resume.getUuid());
+        setItem(index, resume);
+    }
+
+    public int getExistResumeIndex(String uuid){
+        int index = getIndex(uuid);
         if (index >= 0) {
-            setItem(index, resume);
+            return index;
         } else {
-            throw new NotExistStorageException(resume.getUuid());
+            throw new NotExistStorageException(uuid);
         }
     }
 
