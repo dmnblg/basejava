@@ -31,10 +31,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public void setNullLastItem() {
-        storage[size-- - 1] = null;
-    }
-
     protected void setItem(int index, Resume resume) {
         storage[index] = resume;
     }
@@ -50,11 +46,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     public void deleteItem(int index) {
         doDelete(index);
-        size--;
+        storage[size--] = null;
     }
 
-    public abstract void doSave(int index, Resume resume);
+    protected abstract void doSave(int index, Resume resume);
 
-    public abstract void doDelete(int index);
+    protected abstract void doDelete(int index);
 
 }

@@ -14,7 +14,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void doSave(int index, Resume resume) {
-        int pos = -index - 1; // Можно обойтись и без временной переменной, но так код понятней
+        int pos = -index - 1;
         System.arraycopy(storage, pos, storage, pos + 1, size - pos);
         storage[pos] = resume;
     }

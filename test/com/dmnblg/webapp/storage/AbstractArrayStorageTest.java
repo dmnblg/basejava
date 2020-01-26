@@ -4,13 +4,13 @@ import com.dmnblg.webapp.exception.ExistStorageException;
 import com.dmnblg.webapp.exception.NotExistStorageException;
 import com.dmnblg.webapp.exception.OverflowStorageException;
 import com.dmnblg.webapp.model.Resume;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public abstract class AbstractArrayStorageTest {
 
@@ -90,19 +90,11 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = OverflowStorageException.class)
     public void overflowTest() throws Exception {
-
-        // MAX_RESUME изменить не получилось, т.к. final
-        // пока будем заполнять весь массив
-        // Class storageClass = AbstractArrayStorage.class;
-        // Field max = storageClass.getDeclaredField("MAX_RESUME");
-        // max.setAccessible(true);
-        // max.setInt(storage, 5);
         storage.clear();
         for (int i = 0; i < AbstractArrayStorage.MAX_RESUME; i++) {
-            try{
+            try {
                 storage.save(new Resume());
-            }
-            catch (OverflowStorageException e){
+            } catch (OverflowStorageException e) {
                 fail();
             }
         }

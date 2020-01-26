@@ -25,7 +25,6 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     public void doDelete(int index) {
         storage[index] = storage[size - 1];
-        storage[size] = null; // Нужно ли обнулять последний элемент после удаления?
     }
 
 }
