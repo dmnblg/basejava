@@ -1,7 +1,6 @@
 package com.dmnblg.webapp.storage;
 
 import com.dmnblg.webapp.exception.ExistStorageException;
-import com.dmnblg.webapp.exception.NotExistStorageException;
 import com.dmnblg.webapp.model.Resume;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public void save(Resume resume) {
-        if (!storage.contains(resume)) {
+        if (-1 == getIndex(resume.getUuid())) {
             storage.add(resume);
         } else {
             throw new ExistStorageException(resume.getUuid());
@@ -37,7 +36,13 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected int getIndex(String uuid) {
-        return storage.indexOf(new Resume(uuid));
+        int index = -1;
+        for (int i = 0; i < storage.size(); i++) {
+            if (uuid.equals(storage.get(i).getUuid())) {
+                index = i;
+            }
+        }
+        return index;
     }
 
     @Override
@@ -47,7 +52,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void saveItem(int index, Resume resume) {
-        storage.add(index, resume);
+        storage.add(resume);
     }
 
     @Override
