@@ -1,6 +1,5 @@
 package com.dmnblg.webapp.storage;
 
-import com.dmnblg.webapp.exception.ExistStorageException;
 import com.dmnblg.webapp.model.Resume;
 
 import java.util.ArrayList;
@@ -12,15 +11,6 @@ public class ListStorage extends AbstractStorage {
     @Override
     public void clear() {
         storage.clear();
-    }
-
-    @Override
-    public void save(Resume resume) {
-        if (-1 == getIndex(resume.getUuid())) {
-            storage.add(resume);
-        } else {
-            throw new ExistStorageException(resume.getUuid());
-        }
     }
 
     @Override
@@ -58,11 +48,6 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected Resume getItem(int index) {
         return storage.get(index);
-    }
-
-    @Override
-    protected void setNullLastItem() {
-        // Как обойтись без этого метода "костыля"?
     }
 
     @Override

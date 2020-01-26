@@ -1,5 +1,6 @@
 package com.dmnblg.webapp.storage;
 
+import com.dmnblg.webapp.exception.ExistStorageException;
 import com.dmnblg.webapp.exception.NotExistStorageException;
 import com.dmnblg.webapp.model.Resume;
 
@@ -15,7 +16,12 @@ public abstract class AbstractStorage implements Storage {
         setItem(index, resume);
     }
 
-    public int getExistResumeIndex(String uuid){
+    public void delete(String uuid) {
+        int index = getExistResumeIndex(uuid);
+        deleteItem(index);
+    }
+
+    public int getExistResumeIndex(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
             return index;
@@ -24,13 +30,12 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            deleteItem(index);
-            setNullLastItem();
+    public void save(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (index <= -1) {
+            saveItem(index, resume);
         } else {
-            throw new NotExistStorageException(uuid);
+            throw new ExistStorageException(resume.getUuid());
         }
     }
 
@@ -41,8 +46,6 @@ public abstract class AbstractStorage implements Storage {
     abstract protected void saveItem(int index, Resume resume);
 
     abstract protected Resume getItem(int index);
-
-    abstract protected void setNullLastItem();
 
     abstract protected void setItem(int index, Resume resume);
 }

@@ -1,6 +1,5 @@
 package com.dmnblg.webapp.storage;
 
-import com.dmnblg.webapp.exception.ExistStorageException;
 import com.dmnblg.webapp.exception.OverflowStorageException;
 import com.dmnblg.webapp.model.Resume;
 
@@ -32,25 +31,30 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public void save(Resume resume) {
-        if (size == MAX_RESUME) {
-            throw new OverflowStorageException(resume.getUuid());
-        }
-
-        int index = getIndex(resume.getUuid());
-        if (index <= -1) {
-            saveItem(index, resume);
-            size++;
-        } else {
-            throw new ExistStorageException(resume.getUuid());
-        }
-    }
-
     public void setNullLastItem() {
         storage[size-- - 1] = null;
     }
 
     protected void setItem(int index, Resume resume) {
-        storage[index] =  resume;
+        storage[index] = resume;
     }
+
+    public void saveItem(int index, Resume resume) {
+        if (size < MAX_RESUME) {
+            doSave(index, resume);
+            size++;
+        } else {
+            throw new OverflowStorageException(resume.getUuid());
+        }
+    }
+
+    public void deleteItem(int index) {
+        doDelete(index);
+        size--;
+    }
+
+    public abstract void doSave(int index, Resume resume);
+
+    public abstract void doDelete(int index);
+
 }
