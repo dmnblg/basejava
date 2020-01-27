@@ -35,8 +35,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteItem(int index) {
-        storage.remove(index);
+    protected void deleteItem(Integer index) {
+        storage.remove(index.intValue());
     }
 
     @Override
@@ -45,17 +45,17 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void saveItem(int index, Resume resume) {
+    protected void saveItem(Integer index, Resume resume) {
         storage.add(resume);
     }
 
     @Override
-    protected Resume getItem(int index) {
+    protected Resume getItem(Integer index) {
         return storage.get(index);
     }
 
     @Override
-    protected void setItem(int index, Resume resume) {
-        storage.set(index, resume);
+    protected void setItem(Integer index, Resume resume) {
+        storage.add(resume);
     }
 }

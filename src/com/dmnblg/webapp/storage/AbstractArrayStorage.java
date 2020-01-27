@@ -16,7 +16,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    public Resume getItem(int index) {
+    public Resume getItem(Integer index) {
         return storage[index];
     }
 
@@ -31,7 +31,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public void saveItem(int index, Resume resume) {
+    public void saveItem(Integer index, Resume resume) {
         if (size < MAX_RESUME) {
             doSave(index, resume);
             size++;
@@ -40,7 +40,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         }
     }
 
-    public void deleteItem(int index) {
+    public void deleteItem(Integer index) {
         doDelete(index);
         storage[size--] = null;
     }
@@ -50,12 +50,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return (index >= 0);
     }
 
-    protected void setItem(int index, Resume resume) {
+    protected void setItem(Integer index, Resume resume) {
         storage[index] = resume;
     }
 
-    protected abstract void doSave(int index, Resume resume);
+    protected abstract void doSave(Integer index, Resume resume);
 
-    protected abstract void doDelete(int index);
+    protected abstract void doDelete(Integer index);
 
 }
