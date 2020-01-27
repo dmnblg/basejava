@@ -9,8 +9,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     protected Integer getIndex(String uuid) {
         Resume resume = new Resume(uuid);
-        int index = Arrays.binarySearch(storage, 0, size, resume);
-        return Integer.valueOf(index);
+        return Arrays.binarySearch(storage, 0, size, resume);
     }
 
     @Override

@@ -11,7 +11,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[MAX_RESUME];
     protected int size = 0;
 
-
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -32,10 +31,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    protected void setItem(int index, Resume resume) {
-        storage[index] = resume;
-    }
-
     public void saveItem(int index, Resume resume) {
         if (size < MAX_RESUME) {
             doSave(index, resume);
@@ -48,6 +43,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void deleteItem(int index) {
         doDelete(index);
         storage[size--] = null;
+    }
+
+    protected void setItem(int index, Resume resume) {
+        storage[index] = resume;
     }
 
     protected abstract void doSave(int index, Resume resume);

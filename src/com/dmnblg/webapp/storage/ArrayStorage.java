@@ -11,10 +11,10 @@ public class ArrayStorage extends AbstractArrayStorage {
     protected Integer getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
-                return Integer.valueOf(i);
+                return i;
             }
         }
-        return null;
+        return -1;
     }
 
     @Override
