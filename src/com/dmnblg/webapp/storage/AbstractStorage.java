@@ -28,7 +28,7 @@ public abstract class AbstractStorage implements Storage {
 
     private Integer getExistResumeIndex(String uuid) {
         Integer index = getIndex(uuid);
-        if ((index != null) && (index >= 0)) {
+        if (isExist(index)) {
             return index;
         } else {
             throw new NotExistStorageException(uuid);
@@ -49,6 +49,8 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Integer getIndex(String uuid);
 
     protected abstract void deleteItem(int index);
+
+    protected abstract boolean isExist(Integer index);
 
     protected abstract void saveItem(int index, Resume resume);
 

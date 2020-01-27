@@ -45,6 +45,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         storage[size--] = null;
     }
 
+    @Override
+    protected boolean isExist(Integer index) {
+        return (index >= 0);
+    }
+
     protected void setItem(int index, Resume resume) {
         storage[index] = resume;
     }

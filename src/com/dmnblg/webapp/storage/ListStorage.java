@@ -40,6 +40,11 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
+    protected boolean isExist(Integer index) {
+        return (index != null);
+    }
+
+    @Override
     protected void saveItem(int index, Resume resume) {
         storage.add(resume);
     }
