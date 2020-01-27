@@ -11,6 +11,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[MAX_RESUME];
     protected int size = 0;
 
+
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;

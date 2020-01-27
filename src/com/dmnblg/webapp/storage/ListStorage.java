@@ -25,11 +25,11 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected int getIndex(String uuid) {
-        int index = -1;
+    protected Integer getIndex(String uuid) {
+        Integer index = null;
         for (int i = 0; i < storage.size(); i++) {
             if (uuid.equals(storage.get(i).getUuid())) {
-                index = i;
+                index = Integer.valueOf(i);
             }
         }
         return index;
