@@ -37,11 +37,6 @@ public abstract class AbstractStorage implements Storage {
 
     private Integer getNotExistResumeIndex(String uuid) {
         Integer index = getIndex(uuid);
-
-//        if (index == null) {
-//            return 0;
-//        } else if (index < 0) {
-//            return index;
         if (!isExist(index)) {
             return index;
         } else {
