@@ -25,7 +25,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Integer getIndex(String uuid) {
+    protected Object getIndex(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (uuid.equals(storage.get(i).getUuid())) {
                 return i;
@@ -35,27 +35,27 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteItem(Integer index) {
-        storage.remove(index.intValue());
+    protected void deleteItem(Object index) {
+        storage.remove(((Integer) index).intValue());
     }
 
     @Override
-    protected boolean isExist(Integer index) {
+    protected boolean isExist(Object index) {
         return (index != null);
     }
 
     @Override
-    protected void saveItem(Integer index, Resume resume) {
+    protected void saveItem(Object index, Resume resume) {
         storage.add(resume);
     }
 
     @Override
-    protected Resume getItem(Integer index) {
-        return storage.get(index);
+    protected Resume getItem(Object index) {
+        return storage.get((Integer) index);
     }
 
     @Override
-    protected void setItem(Integer index, Resume resume) {
+    protected void setItem(Object index, Resume resume) {
         storage.add(resume);
     }
 }
