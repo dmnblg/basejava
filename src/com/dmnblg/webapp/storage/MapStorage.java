@@ -3,42 +3,40 @@ package com.dmnblg.webapp.storage;
 import com.dmnblg.webapp.model.Resume;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
 
-    protected HashMap<String, Resume> storage = new HashMap<>();
+    protected Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected Object getIndex(String uuid) {
-        if (storage.containsKey(uuid)) {
-            return uuid;
-        }
-        return null;
+    protected String getKey(String uuid) {
+        return uuid;
     }
 
     @Override
-    protected void deleteItem(Object index) {
-        storage.remove(index);
+    protected void deleteItem(Object key) {
+        storage.remove((String) key);
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return storage.containsKey(index);
+    protected boolean isExist(Object key) {
+        return storage.containsKey((String) key);
     }
 
     @Override
-    protected void saveItem(Object index, Resume resume) {
+    protected void saveItem(Object key, Resume resume) {
         storage.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected Resume getItem(Object index) {
-        return storage.get(index);
+    protected Resume getItem(Object key) {
+        return storage.get((String) key);
     }
 
     @Override
-    protected void setItem(Object index, Resume resume) {
-        storage.put((String) index, resume);
+    protected void setItem(Object key, Resume resume) {
+        storage.put((String) key, resume);
     }
 
     @Override

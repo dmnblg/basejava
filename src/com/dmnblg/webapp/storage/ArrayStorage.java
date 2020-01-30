@@ -8,7 +8,7 @@ import com.dmnblg.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected Object getIndex(String uuid) {
+    protected Integer getKey(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
@@ -18,13 +18,13 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void doSave(Integer index, Resume resume) {
+    public void doSave(Integer key, Resume resume) {
         storage[size] = resume;
     }
 
     @Override
-    public void doDelete(Integer index) {
-        storage[index] = storage[size - 1];
+    public void doDelete(Integer key) {
+        storage[key] = storage[size - 1];
     }
 
 }

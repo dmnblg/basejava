@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import java.util.UUID;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public abstract class AbstractStorageTest {
 
@@ -19,6 +19,10 @@ public abstract class AbstractStorageTest {
     protected static final String UUID_2 = "uuid2";
     protected static final String UUID_3 = "uuid3";
 
+    protected static final Resume RESUME_1 = new Resume(UUID_1);
+    protected static final Resume RESUME_2 = new Resume(UUID_2);
+    protected static final Resume RESUME_3 = new Resume(UUID_3);
+
     public AbstractStorageTest(AbstractStorage storage) {
         this.storage = storage;
     }
@@ -26,9 +30,9 @@ public abstract class AbstractStorageTest {
     @Before
     public void setUp() throws Exception {
         storage.clear();
-        storage.save(new Resume(UUID_1));
-        storage.save(new Resume(UUID_2));
-        storage.save(new Resume(UUID_3));
+        storage.save(RESUME_1);
+        storage.save(RESUME_2);
+        storage.save(RESUME_3);
     }
 
     @Test
@@ -39,17 +43,21 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        Resume resume = storage.get(UUID_2);
+        Resume resume = new Resume(UUID_2);
         assertEquals(storage.get(UUID_2), resume);
     }
 
     @Test
     public void getAll() {
         Resume[] all = storage.getAll();
+        Resume[] reference = new Resume[3];
         assertEquals(3, all.length);
-        assertNotNull(storage.get(all[0].getUuid()));
-        assertNotNull(storage.get(all[1].getUuid()));
-        assertNotNull(storage.get(all[2].getUuid()));
+
+        reference[0] = RESUME_1;
+        reference[1] = RESUME_2;
+        reference[2] = RESUME_3;
+
+        assertArrayEquals(reference, all);
     }
 
     @Test
@@ -85,7 +93,17 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() throws Exception {
-        storage.save(new Resume(UUID_2));
+        storage.save(RESUME_2);
+    }
+
+    @Test
+    public void update() throws Exception {
+        storage.update(RESUME_3);
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void updateNotExist() throws Exception {
+        storage.update(new Resume("dummy"));
     }
 
 }
