@@ -12,7 +12,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void save(Resume resume) {
-        Integer index = getNotExistResumeIndex(resume.getUuid());
+        Object index = getNotExistResumeIndex(resume.getUuid());
         saveItem(index, resume);
     }
 
@@ -35,8 +35,8 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    private Integer getNotExistResumeIndex(String uuid) {
-        Integer index = (Integer) getIndex(uuid);
+    private Object getNotExistResumeIndex(String uuid) {
+        Object index = getIndex(uuid);
         if (!isExist(index)) {
             return index;
         } else {
