@@ -36,15 +36,23 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void clear() {
-        storage.clear();
-        assertEquals(0, storage.size());
+    public void save() {
+        String uuid = UUID.randomUUID().toString();
+        Resume resume = new Resume(uuid);
+        storage.save(resume);
+        assertEquals(resume, storage.get(uuid));
+        assertEquals(4, storage.size());
+    }
+
+    @Test(expected = ExistStorageException.class)
+    public void saveExist() throws Exception {
+        storage.save(RESUME_2);
     }
 
     @Test
     public void get() {
         Resume resume = new Resume(UUID_2);
-        assertEquals(storage.get(UUID_2), resume);
+        assertEquals(resume, RESUME_2);
     }
 
     @Test
@@ -61,17 +69,13 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void size() {
-        assertEquals(3, storage.size());
+    public void update() throws Exception {
+        storage.update(RESUME_3);
     }
 
-    @Test
-    public void save() {
-        String uuid = UUID.randomUUID().toString();
-        Resume resume = new Resume(uuid);
-        storage.save(resume);
-        assertEquals(resume, storage.get(uuid));
-        assertEquals(4, storage.size());
+    @Test(expected = NotExistStorageException.class)
+    public void updateNotExist() throws Exception {
+        storage.update(new Resume("dummy"));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -91,19 +95,15 @@ public abstract class AbstractStorageTest {
         storage.get("dummy");
     }
 
-    @Test(expected = ExistStorageException.class)
-    public void saveExist() throws Exception {
-        storage.save(RESUME_2);
+    @Test
+    public void clear() {
+        storage.clear();
+        assertEquals(0, storage.size());
     }
 
     @Test
-    public void update() throws Exception {
-        storage.update(RESUME_3);
-    }
-
-    @Test(expected = NotExistStorageException.class)
-    public void updateNotExist() throws Exception {
-        storage.update(new Resume("dummy"));
+    public void size() {
+        assertEquals(3, storage.size());
     }
 
 }
