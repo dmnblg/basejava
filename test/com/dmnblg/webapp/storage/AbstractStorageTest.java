@@ -50,7 +50,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        assertEquals(storage.get(UUID_2), RESUME_2);
+        assertEquals(RESUME_1, storage.get(UUID_1));
     }
 
     @Test
@@ -69,7 +69,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() throws Exception {
         Resume resume = new Resume(UUID_3);
-        storage.update(RESUME_3);
+        storage.update(resume);
         assertSame(resume, storage.get(UUID_3));
         assertEquals(3, storage.size());
     }
