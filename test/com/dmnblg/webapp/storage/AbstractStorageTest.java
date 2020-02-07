@@ -6,6 +6,8 @@ import com.dmnblg.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -53,17 +55,36 @@ public abstract class AbstractStorageTest {
         assertEquals(RESUME_1, storage.get(UUID_1));
     }
 
+//    @Test
+//    public void getAll() {
+//        Resume[] all = storage.getAll();
+//        Resume[] reference = new Resume[3];
+//        assertEquals(3, all.length);
+//
+//        reference[0] = RESUME_1;
+//        reference[1] = RESUME_2;
+//        reference[2] = RESUME_3;
+//
+//        assertArrayEquals(reference, all);
+//    }
+
     @Test
-    public void getAll() {
-        Resume[] all = storage.getAll();
-        Resume[] reference = new Resume[3];
-        assertEquals(3, all.length);
+    public void getAllSorted() {
+        List<Resume> all = storage.getAllSorted();
+        List<Resume> reference = new ArrayList<Resume>();
+        assertEquals(3, all.size());
 
-        reference[0] = RESUME_1;
-        reference[1] = RESUME_2;
-        reference[2] = RESUME_3;
+        reference.add(RESUME_1);
+        reference.add(RESUME_2);
+        reference.add(RESUME_3);
 
-        assertArrayEquals(reference, all);
+        Resume[] referenceArray = new Resume[storage.size()];
+        reference.toArray(referenceArray);
+
+        Resume[] allArray = new Resume[storage.size()];
+        reference.toArray(allArray);
+
+        assertArrayEquals(referenceArray, allArray);
     }
 
     @Test

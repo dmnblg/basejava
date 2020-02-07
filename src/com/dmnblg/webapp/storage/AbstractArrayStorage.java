@@ -4,6 +4,7 @@ import com.dmnblg.webapp.exception.OverflowStorageException;
 import com.dmnblg.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
 
@@ -20,11 +21,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return storage[(Integer) index];
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> result = Arrays.asList(Arrays.copyOfRange(storage, 0, size));
+        result.sort(RESUME_COMPARATOR);
+        return result;
     }
 
     public int size() {
