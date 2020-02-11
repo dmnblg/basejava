@@ -21,13 +21,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return storage[(Integer) index];
     }
 
-    @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> result = Arrays.asList(Arrays.copyOfRange(storage, 0, size));
-        result.sort(RESUME_COMPARATOR);
-        return result;
-    }
-
     public int size() {
         return size;
     }
@@ -44,6 +37,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void deleteItem(Object index) {
         doDelete((Integer) index);
         storage[--size] = null;
+    }
+
+    @Override
+    protected List<Resume> getAllList() {
+        return Arrays.asList(storage);
     }
 
     @Override

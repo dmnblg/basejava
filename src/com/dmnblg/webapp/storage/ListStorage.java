@@ -14,14 +14,6 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> result = new ArrayList<Resume>();
-        result.addAll(storage);
-        result.sort(RESUME_COMPARATOR);
-        return result;
-    }
-
-    @Override
     public int size() {
         return storage.size();
     }
@@ -59,5 +51,10 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected void setItem(Object key, Resume resume) {
         storage.set((Integer) key, resume);
+    }
+
+    @Override
+    protected List<Resume> getAllList() {
+        return new ArrayList<>(storage);
     }
 }

@@ -5,10 +5,20 @@ import com.dmnblg.webapp.exception.NotExistStorageException;
 import com.dmnblg.webapp.model.Resume;
 
 import java.util.Comparator;
+import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
+    protected static final Comparator<Resume> RESUME_COMPARATOR = new Comparator<Resume>() {
+        @Override
+        public int compare(Resume resume, Resume t1) {
+            if (resume.getFullName().equals(t1.getFullName())) {
+                return resume.getUuid().compareTo(t1.getUuid());
+            } else {
+                return resume.getFullName().compareTo(t1.getFullName());
+            }
+        }
+    };
 
     public Resume get(String uuid) {
         Object key = getExistResumeKey(uuid);
@@ -48,6 +58,13 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> result = getAllList();
+        result.sort(RESUME_COMPARATOR);
+        return result;
+    }
+
     protected abstract Object getKey(String uuid);
 
     protected abstract void deleteItem(Object key);
@@ -59,4 +76,6 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Resume getItem(Object key);
 
     protected abstract void setItem(Object key, Resume resume);
+
+    protected abstract List<Resume> getAllList();
 }

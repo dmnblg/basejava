@@ -2,7 +2,7 @@ package com.dmnblg.webapp.storage;
 
 import com.dmnblg.webapp.model.Resume;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,13 +44,18 @@ public class MapKeyStorage extends AbstractStorage {
     }
 
     @Override
+    protected List<Resume> getAllList() {
+        return new ArrayList<>(storage.values());
+    }
+
+    @Override
     public void clear() {
         storage.clear();
     }
 
     @Override
     public List<Resume> getAllSorted() {
-        List<Resume> result = Arrays.asList(storage.values().toArray(new Resume[0]));
+        List<Resume> result = new ArrayList<>(storage.values());
         result.sort(RESUME_COMPARATOR);
         return result;
     }

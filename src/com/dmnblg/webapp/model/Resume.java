@@ -1,5 +1,6 @@
 package com.dmnblg.webapp.model;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -11,16 +12,13 @@ public class Resume implements Comparable<Resume> {
     private final String uuid;
     private final String fullName;
 
-    public Resume() {
-        this(UUID.randomUUID().toString());
+    public Resume(String fullName) {
+        this(fullName, UUID.randomUUID().toString());
     }
 
-    public Resume(String uuid) {
-        this.uuid = uuid;
-        fullName = "";
-    }
-
-    public Resume(String uuid, String fullName) {
+    public Resume(String fullName, String uuid) {
+        Objects.requireNonNull(uuid, "Check uuid.");
+        Objects.requireNonNull(fullName, "Check fullName");
         this.uuid = uuid;
         this.fullName = fullName;
     }
@@ -29,9 +27,13 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
     @Override
     public String toString() {
-        return uuid;
+        return fullName + "/" + uuid;
     }
 
     @Override
@@ -41,12 +43,7 @@ public class Resume implements Comparable<Resume> {
 
         Resume resume = (Resume) o;
 
-        return uuid.equals(resume.uuid);
-    }
-
-    @Override
-    public int hashCode() {
-        return uuid.hashCode();
+        return uuid.equals(resume.uuid) & (fullName.equals(resume.fullName));
     }
 
     @Override
@@ -54,7 +51,8 @@ public class Resume implements Comparable<Resume> {
         return this.getUuid().compareTo(o.getUuid());
     }
 
-    public String getFullName() {
-        return fullName;
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid, fullName);
     }
 }
