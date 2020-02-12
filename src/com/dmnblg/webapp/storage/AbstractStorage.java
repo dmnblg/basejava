@@ -40,6 +40,13 @@ public abstract class AbstractStorage implements Storage {
         deleteItem(key);
     }
 
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> result = getAllList();
+        result.sort(RESUME_COMPARATOR);
+        return result;
+    }
+
     private Object getExistResumeKey(String uuid) {
         Object key = getKey(uuid);
         if (isExist(key)) {
@@ -56,13 +63,6 @@ public abstract class AbstractStorage implements Storage {
         } else {
             throw new ExistStorageException(uuid);
         }
-    }
-
-    @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> result = getAllList();
-        result.sort(RESUME_COMPARATOR);
-        return result;
     }
 
     protected abstract Object getKey(String uuid);

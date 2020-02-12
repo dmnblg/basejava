@@ -2,7 +2,10 @@ package com.dmnblg.webapp.storage;
 
 import com.dmnblg.webapp.model.Resume;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
 
@@ -15,12 +18,12 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void deleteItem(Object key) {
-        storage.remove(key);
+        storage.remove((String) key);
     }
 
     @Override
     protected boolean isExist(Object key) {
-        return storage.containsKey(key);
+        return storage.containsKey((String) key);
     }
 
     @Override
@@ -30,7 +33,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume getItem(Object key) {
-        return storage.get(key);
+        return storage.get((String) key);
     }
 
     @Override
@@ -46,13 +49,6 @@ public class MapStorage extends AbstractStorage {
     @Override
     public void clear() {
         storage.clear();
-    }
-
-    @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> result = Arrays.asList(storage.values().toArray(new Resume[0]));
-        result.sort(RESUME_COMPARATOR);
-        return result;
     }
 
     @Override

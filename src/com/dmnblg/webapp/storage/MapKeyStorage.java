@@ -54,13 +54,6 @@ public class MapKeyStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> result = new ArrayList<>(storage.values());
-        result.sort(RESUME_COMPARATOR);
-        return result;
-    }
-
-    @Override
     public int size() {
         return storage.size();
     }
