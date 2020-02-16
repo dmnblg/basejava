@@ -7,7 +7,7 @@ import com.dmnblg.webapp.model.Resume;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<T> implements Storage {
 
     protected static final Comparator<Resume> RESUME_COMPARATOR = new Comparator<Resume>() {
         @Override
@@ -21,22 +21,22 @@ public abstract class AbstractStorage implements Storage {
     };
 
     public Resume get(String uuid) {
-        Object key = getExistResumeKey(uuid);
+        T key = getExistResumeKey(uuid);
         return getItem(key);
     }
 
     public void save(Resume resume) {
-        Object key = getNotExistResumeKey(resume.getUuid());
+        T key = getNotExistResumeKey(resume.getUuid());
         saveItem(key, resume);
     }
 
     public void update(Resume resume) {
-        Object key = getExistResumeKey(resume.getUuid());
+        T key = getExistResumeKey(resume.getUuid());
         setItem(key, resume);
     }
 
     public void delete(String uuid) {
-        Object key = getExistResumeKey(uuid);
+        T key = getExistResumeKey(uuid);
         deleteItem(key);
     }
 
@@ -47,8 +47,8 @@ public abstract class AbstractStorage implements Storage {
         return result;
     }
 
-    private Object getExistResumeKey(String uuid) {
-        Object key = getKey(uuid);
+    private T getExistResumeKey(String uuid) {
+        T key = getKey(uuid);
         if (isExist(key)) {
             return key;
         } else {
@@ -56,8 +56,8 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    private Object getNotExistResumeKey(String uuid) {
-        Object key = getKey(uuid);
+    private T getNotExistResumeKey(String uuid) {
+        T key = getKey(uuid);
         if (!isExist(key)) {
             return key;
         } else {
@@ -65,17 +65,17 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    protected abstract Object getKey(String uuid);
+    protected abstract T getKey(String uuid);
 
-    protected abstract void deleteItem(Object key);
+    protected abstract void deleteItem(T key);
 
-    protected abstract boolean isExist(Object key);
+    protected abstract boolean isExist(T key);
 
-    protected abstract void saveItem(Object key, Resume resume);
+    protected abstract void saveItem(T key, Resume resume);
 
-    protected abstract Resume getItem(Object key);
+    protected abstract Resume getItem(T key);
 
-    protected abstract void setItem(Object key, Resume resume);
+    protected abstract void setItem(T key, Resume resume);
 
     protected abstract List<Resume> getAllList();
 }
