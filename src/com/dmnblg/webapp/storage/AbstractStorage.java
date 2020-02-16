@@ -6,8 +6,11 @@ import com.dmnblg.webapp.model.Resume;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public abstract class AbstractStorage<T> implements Storage {
+
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
     protected static final Comparator<Resume> RESUME_COMPARATOR = new Comparator<Resume>() {
         @Override
@@ -21,27 +24,32 @@ public abstract class AbstractStorage<T> implements Storage {
     };
 
     public Resume get(String uuid) {
+        LOG.info("Get " + uuid);
         T key = getExistResumeKey(uuid);
         return getItem(key);
     }
 
     public void save(Resume resume) {
+        LOG.info("Save " + resume);
         T key = getNotExistResumeKey(resume.getUuid());
         saveItem(key, resume);
     }
 
     public void update(Resume resume) {
+        LOG.info("Update " + resume);
         T key = getExistResumeKey(resume.getUuid());
         setItem(key, resume);
     }
 
     public void delete(String uuid) {
+        LOG.info("Delete " + uuid);
         T key = getExistResumeKey(uuid);
         deleteItem(key);
     }
 
     @Override
     public List<Resume> getAllSorted() {
+        LOG.info("getAllSorted");
         List<Resume> result = getAllList();
         result.sort(RESUME_COMPARATOR);
         return result;
@@ -52,6 +60,7 @@ public abstract class AbstractStorage<T> implements Storage {
         if (isExist(key)) {
             return key;
         } else {
+            LOG.warning("Resume " + uuid + " not exist");
             throw new NotExistStorageException(uuid);
         }
     }
@@ -61,6 +70,7 @@ public abstract class AbstractStorage<T> implements Storage {
         if (!isExist(key)) {
             return key;
         } else {
+            LOG.warning("Resume " + uuid + " already exist");
             throw new ExistStorageException(uuid);
         }
     }
