@@ -1,7 +1,6 @@
 package com.dmnblg.webapp.model;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Initial resume class
@@ -11,6 +10,7 @@ public class Resume implements Comparable<Resume> {
     // Unique identifier
     private final String uuid;
     private final String fullName;
+    private final Map<ContactInfoType, ArrayList<String>> contactInfo = new HashMap<>();
 
     public Resume(String fullName) {
         this(fullName, UUID.randomUUID().toString());
